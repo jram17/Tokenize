@@ -11,7 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fontsource-variable/faustina": "^5.0.14",
+    "@fontsource/poppins": "^5.0.14",
     "ethers": "^6.13.2",
+    "gsap": "^3.12.5",
     "hardhat": "^2.22.7",
     "react-router-dom": "^6.26.0"
   },

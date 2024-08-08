@@ -6,12 +6,18 @@ import {
   Route,
   RouterProvider,
 } from 'react-router-dom';
-import Layout from './components/Layout';
+import Layout from './app_components/Layout';
 import Home from './pages/Home';
+import CreateTokens from './pages/CreateTokens';
+import TradeTokens from './pages/TradeTokens';
+import TokenDetails from './pages/TokenDetails';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
+      <Route path="/create" element={<CreateTokens />} />
+      <Route path="/trade" element={<TradeTokens />} />
+      <Route path="/details" element={<TokenDetails />} />
     </Route>
   )
 );
