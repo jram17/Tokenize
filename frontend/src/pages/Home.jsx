@@ -1,5 +1,5 @@
 import React from 'react';
-import bg from '../../public/front-page-bg.jpg';
+import bg from '/front-page-bg.jpg';
 
 function Home() {
   return (
