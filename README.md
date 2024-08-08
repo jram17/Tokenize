@@ -1,4 +1,4 @@
-# web3ssh
+# Tokenize
 # Winter - Decentralized Token Exchange Platform
 
 ## Problem Statement
