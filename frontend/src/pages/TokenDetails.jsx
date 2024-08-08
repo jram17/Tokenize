@@ -36,7 +36,7 @@ function TokenDetails() {
   const allTokenDetails = [personaltokendetails, ...othertokendetails];
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-cover bg-repeat-y">
+    <div className="min-h-screen flex items-left justify-center bg-cover bg-repeat-y">
       <MyToken tokendetails={allTokenDetails} />
     </div>
   );
