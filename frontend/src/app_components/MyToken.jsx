@@ -9,11 +9,11 @@ import {
 
 function MyToken({ tokendetails }) {
   return (
-    <div className="flex flex-col gap-4 mt-11 overflow-scroll w-full">
+    <div className="flex flex-col gap-4 mt-11  w-full">
       <div className="w-full flex items-center justify-center">
         <p className="text-5xl">My Tokens</p>
       </div>
-      <div className="grid grid-cols-2 gap-5 w-full m-4">
+      <div className="grid grid-cols-2 gap-5 m-2 w-full">
         {tokendetails.map((token, index) => (
           <Card
             key={token.tokensymbol}

@@ -39,7 +39,7 @@ function Info() {
           <Button>Trade Tokens</Button>
         </Link>
         <Link to={'/details'}>
-          <Button>My Tokens</Button>
+          <Button>My Tokens </Button>
         </Link>
       </div>
     </section>
