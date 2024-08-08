@@ -9,9 +9,9 @@ import {
 
 function MyToken({ tokendetails }) {
   return (
-    <div className="flex flex-col gap-4 mt-11  w-full">
-      <div className="w-full flex items-center justify-center">
-        <p className="text-5xl">My Tokens</p>
+    <div className="flex flex-col justify-around gap-4  w-full bg-[#f0f0f0]">
+      <div className="w-full flex items-center justify-around">
+        <p className="text-5xl font-faustina">My Tokens</p>
       </div>
       <div className="grid grid-cols-2 gap-5 m-2 w-full">
         {tokendetails.map((token, index) => (
@@ -19,7 +19,7 @@ function MyToken({ tokendetails }) {
             key={token.tokensymbol}
             className="flex flex-col gap-2 shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
-            <CardHeader>{token.tokenname}</CardHeader>
+            <CardHeader className="font-faustina">{token.tokenname}</CardHeader>
             <CardContent className="flex flex-col gap-3">
               <CardDescription>ETH Value: {token.ethvalue}</CardDescription>
               <CardDescription>
