@@ -41,9 +41,7 @@ function TokenForm() {
     },
   });
 
-  // Define the submit handler
   const onSubmit = (values) => {
-    // Do something with the form values
     console.log('Submitting form with values:', values);
   };
 
