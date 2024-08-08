@@ -22,7 +22,7 @@ function Info() {
     });
   }, []);
   return (
-    <section className="flex flex-col gap-10 m-8">
+    <section className="flex flex-col gap-10 m-8 text-white">
       <div className="flex flex-col gap-1 font-faustina">
         <p className="text-9xl opacity-0" ref={nameRef}>
           Tokenize
