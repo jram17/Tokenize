@@ -13,7 +13,7 @@ function MyToken({ tokendetails }) {
       <div className="w-full flex items-center justify-center">
         <p className="text-5xl">My Tokens</p>
       </div>
-      <div className="grid grid-cols-2 gap-5 w-full m-8">
+      <div className="grid grid-cols-2 gap-5 w-full m-4">
         {tokendetails.map((token, index) => (
           <Card
             key={token.tokensymbol}
