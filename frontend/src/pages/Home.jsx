@@ -4,7 +4,7 @@ import Info from '@/app_components/Info';
 function Home() {
   return (
     <div
-      className={`flex flex-col items-left justify-center object-cover min-h-screen bg-cover bg-repeat-y overflow-scroll bg-left-top`}
+      className={`flex flex-col items-left justify-center object-cover min-h-screen bg-cover bg-repeat-y `}
       style={{ backgroundImage: `url("${bg}")` }}
     >
       <Info />
