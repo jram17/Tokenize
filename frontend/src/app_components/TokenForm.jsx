@@ -67,10 +67,9 @@ function TokenForm() {
     initializeEthers();
   }, []);
 
-  // Update the form whenever the address changes
   useEffect(() => {
     reset({
-      useraddress: address || '', // Update the address
+      useraddress: address || '',
     });
   }, [address, reset]);
 
@@ -86,13 +85,11 @@ function TokenForm() {
         details.abi,
         signer
       );
-
       const tokenValueInWei = ethers.BigNumber.from('1');
       const costPerToken = tokenValueInWei.div(ethers.BigNumber.from('100'));
       const totalCost = costPerToken.mul(
         ethers.BigNumber.from(values.nofotokens)
       );
-
       const tx = await contract.mintTokens(
         values.tokenname,
         values.tokensymbol,
@@ -101,7 +98,7 @@ function TokenForm() {
           value: totalCost,
         }
       );
-
+      console.log('came here');
       await tx.wait();
       toast({
         description: 'Token Created Successfully.',
