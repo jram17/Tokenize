@@ -59,6 +59,39 @@ const details = {
             "type": "function"
         },
         {
+            "inputs": [],
+            "name": "getTokenHolderDetailsWithAddress",
+            "outputs": [
+                {
+                    "internalType": "address",
+                    "name": "holderAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "string",
+                    "name": "tokenName",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "tokenSymbol",
+                    "type": "string"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "number",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "amount",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
             "inputs": [
                 {
                     "internalType": "string",

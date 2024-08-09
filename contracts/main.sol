@@ -57,13 +57,48 @@ contract Main {
         Owner.transfer(msg.value);
     }
 
-    function getTokenHolderDetails(string memory symbol) public view returns (address holderAddress,string memory tokenName,string memory tokenSymbol,uint256 number,uint256 amount){
+    function getTokenHolderDetails(
+        string memory symbol
+    )
+        public
+        view
+        returns (
+            address holderAddress,
+            string memory tokenName,
+            string memory tokenSymbol,
+            uint256 number,
+            uint256 amount
+        )
+    {
         TokenHolder storage holder = accounts[symbol];
-        return (holder.holderAddress,holder.tokenName,holder.tokenSymbol,holder.number,holder.amount);
-    }    
-    function getTokenHolderDetailsWithAddress(address tokenAddress) public view returns (address holderAddress,string memory tokenName,string memory tokenSymbol,uint256 number,uint256 amount){
-        TokenHolder storage holder = tokenAccounts[tokenAddress];
-        return (holder.holderAddress,holder.tokenName,holder.tokenSymbol,holder.number,holder.amount);
+        return (
+            holder.holderAddress,
+            holder.tokenName,
+            holder.tokenSymbol,
+            holder.number,
+            holder.amount
+        );
+    }
+
+    function getTokenHolderDetailsWithAddress()
+        public
+        view
+        returns (
+            address holderAddress,
+            string memory tokenName,
+            string memory tokenSymbol,
+            uint256 number,
+            uint256 amount
+        )
+    {
+        TokenHolder storage holder = tokenAccounts[msg.sender];
+        return (
+            holder.holderAddress,
+            holder.tokenName,
+            holder.tokenSymbol,
+            holder.number,
+            holder.amount
+        );
     }
 
     function showToken() public view returns (string[] memory) {
