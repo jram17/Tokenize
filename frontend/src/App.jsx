@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
+import { AddressStore } from './store/store';
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -11,6 +12,7 @@ import Home from './pages/Home';
 import CreateTokens from './pages/CreateTokens';
 import TradeTokens from './pages/TradeTokens';
 import TokenDetails from './pages/TokenDetails';
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
@@ -21,12 +23,16 @@ const router = createBrowserRouter(
     </Route>
   )
 );
+
 function App() {
-  const [account, setAccount] = useState(null);
   const [provider, setProvider] = useState(null);
   const [signer, setSigner] = useState(null);
+  const { setAddress, resetState } = AddressStore((state) => ({
+    setAddress: state.setAddress,
+    resetState: state.resetState,
+  }));
+
   const _initialize = async (selectedAddress) => {
-    setAccount(selectedAddress);
     // Add your initialization logic here
   };
 
@@ -34,13 +40,10 @@ function App() {
     // Add your logic to stop polling data here
   };
 
-  const _resetState = () => {
-    setAccount(null);
-    // Add your logic to reset the state here
-  };
   const _checkNetwork = async () => {
     // Add your network checking logic here
   };
+
   const _connectWallet = async () => {
     if (window.ethereum) {
       const [selectedAddress] = await window.ethereum.request({
@@ -48,23 +51,32 @@ function App() {
       });
       await _checkNetwork();
       await _initialize(selectedAddress);
-      const provider = await new ethers.providers.Web3Provider(window.ethereum);
-      setProvider(provider);
+
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
+      setProvider(provider);
       setSigner(signer);
-      window.ethereum.on('accountsChanged', ([newAddress]) => {
+      setAddress(selectedAddress);
+
+      window.ethereum.on('accountsChanged', async ([newAddress]) => {
         _stopPollingData();
-        if (newAddress === undefined) {
-          return _resetState();
+        if (!newAddress) {
+          return resetState();
         }
-        console.log('changed address', newAddress);
-        _initialize(newAddress);
+        setAddress(newAddress);
+        await _initialize(newAddress);
       });
     }
   };
 
   useEffect(() => {
     _connectWallet();
+    return () => {
+      // Cleanup event listeners on component unmount
+      if (window.ethereum) {
+        window.ethereum.removeListener('accountsChanged', _connectWallet);
+      }
+    };
   }, []);
 
   return <RouterProvider router={router} />;

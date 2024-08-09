@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useForm, useFormState } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import details from '../contracts';
@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { AddressStore } from '@/store/store';
 
 // Define the form schema
 const formSchema = z.object({
@@ -35,12 +36,24 @@ const formSchema = z.object({
 function TokenForm() {
   const [provider, setProvider] = useState(null);
   const [signer, setSigner] = useState(null);
+  const { address } = AddressStore((state) => ({ address: state.address }));
+
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      useraddress: address || '', // Use address from store or default to empty string
+      tokenname: '',
+      tokensymbol: '',
+      nofotokens: '',
+    },
+  });
+
+  const { reset } = form;
+
   useEffect(() => {
     const initializeEthers = async () => {
       if (window.ethereum) {
-        const provider = await new ethers.providers.Web3Provider(
-          window.ethereum
-        );
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
         setProvider(provider);
         const signer = provider.getSigner();
         setSigner(signer);
@@ -51,17 +64,20 @@ function TokenForm() {
 
     initializeEthers();
   }, []);
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      useraddress: '',
-      tokenname: '',
-      tokensymbol: '',
-      nofotokens: '',
-    },
-  });
+
+  // Update the form whenever the address changes
+  useEffect(() => {
+    reset({
+      useraddress: address || '', // Update the address
+    });
+  }, [address, reset]);
 
   const onSubmit = async (values) => {
+    if (!provider || !signer) {
+      console.error('Provider or signer is not initialized');
+      return;
+    }
+
     try {
       const contract = new ethers.Contract(
         details.address,
@@ -91,8 +107,8 @@ function TokenForm() {
   };
 
   return (
-    <div className="min-w-[50vw]  rounded-md p-12  bg-[#fff] bg-opacity-45 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)]">
-      <div className="text-2xl font-faustina  w-full  flex items-center justify-center">
+    <div className="min-w-[50vw] rounded-md p-12 bg-[#fff] bg-opacity-45 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)]">
+      <div className="text-2xl font-faustina w-full flex items-center justify-center">
         <p>Mint Your Tokens</p>
       </div>
       <Form {...form}>
@@ -107,6 +123,7 @@ function TokenForm() {
                   <Input
                     placeholder="0x4e....2ew"
                     className="min-w-[90%]"
+                    disabled={true}
                     {...field}
                   />
                 </FormControl>

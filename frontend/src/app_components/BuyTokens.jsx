@@ -60,12 +60,11 @@ function BuyTokens() {
   });
 
   const onSubmit = (values) => {
-    console.log('hitting');
-    // console.log('Submitting form with values:', values);
-    // console.log('fetching');
-    // const contract = new ethers.Contract(details.address, details.abi, signer);
-    // console.log('fetched');
-    // console.log(contract);
+    console.log('Submitting form with values:', values);
+    console.log('fetching');
+    const contract = new ethers.Contract(details.address, details.abi, signer);
+    console.log('fetched');
+    console.log(contract);
   };
 
   return (
