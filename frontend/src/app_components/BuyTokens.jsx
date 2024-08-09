@@ -2,6 +2,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
+import details from '../contracts';
+import { ethers } from 'ethers';
+import { useState } from 'react';
 import {
   Form,
   FormControl,
@@ -30,7 +33,22 @@ const formSchema = z.object({
 });
 
 function BuyTokens() {
-  // Create the form using useForm
+  const [provider, setProvider] = useState(null);
+  const [signer, setSigner] = useState(null);
+  useEffect(() => {
+    const initializeEthers = async () => {
+      if (window.ethereum) {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        setProvider(provider);
+        const signer = provider.getSigner();
+        setSigner(signer);
+      } else {
+        console.error('No Ethereum provider found');
+      }
+    };
+
+    initializeEthers();
+  }, []);
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -42,7 +60,12 @@ function BuyTokens() {
   });
 
   const onSubmit = (values) => {
-    console.log('Submitting form with values:', values);
+    console.log('hitting');
+    // console.log('Submitting form with values:', values);
+    // console.log('fetching');
+    // const contract = new ethers.Contract(details.address, details.abi, signer);
+    // console.log('fetched');
+    // console.log(contract);
   };
 
   return (

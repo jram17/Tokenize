@@ -2,6 +2,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
+import details from '../contracts';
+import { ethers } from 'ethers';
+import { useState, useEffect } from 'react';
 import {
   Form,
   FormControl,
@@ -30,7 +33,24 @@ const formSchema = z.object({
 });
 
 function TokenForm() {
-  // Create the form using useForm
+  const [provider, setProvider] = useState(null);
+  const [signer, setSigner] = useState(null);
+  useEffect(() => {
+    const initializeEthers = async () => {
+      if (window.ethereum) {
+        const provider = await new ethers.providers.Web3Provider(
+          window.ethereum
+        );
+        setProvider(provider);
+        const signer = provider.getSigner();
+        setSigner(signer);
+      } else {
+        console.error('No Ethereum provider found');
+      }
+    };
+
+    initializeEthers();
+  }, []);
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -41,8 +61,33 @@ function TokenForm() {
     },
   });
 
-  const onSubmit = (values) => {
-    console.log('Submitting form with values:', values);
+  const onSubmit = async (values) => {
+    try {
+      const contract = new ethers.Contract(
+        details.address,
+        details.abi,
+        signer
+      );
+
+      const tokenValueInWei = ethers.BigNumber.from('1');
+      const costPerToken = tokenValueInWei.div(ethers.BigNumber.from('100'));
+      const totalCost = costPerToken.mul(
+        ethers.BigNumber.from(values.nofotokens)
+      );
+
+      const tx = await contract.mintTokens(
+        values.tokenname,
+        values.tokensymbol,
+        Number(values.nofotokens),
+        {
+          value: totalCost,
+        }
+      );
+
+      await tx.wait();
+    } catch (error) {
+      console.error('Error creating token:', error);
+    }
   };
 
   return (
