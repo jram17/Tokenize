@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import details from '../contracts';
 import { ethers } from 'ethers';
 import { useState, useEffect } from 'react';
+
+import { useToast } from '@/components/ui/use-toast';
 import {
   Form,
   FormControl,
@@ -37,7 +39,7 @@ function TokenForm() {
   const [provider, setProvider] = useState(null);
   const [signer, setSigner] = useState(null);
   const { address } = AddressStore((state) => ({ address: state.address }));
-
+  const { toast } = useToast();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -101,8 +103,14 @@ function TokenForm() {
       );
 
       await tx.wait();
+      toast({
+        description: 'Token Created Successfully.',
+      });
     } catch (error) {
-      console.error('Error creating token:', error);
+      toast({
+        variant: 'destructive',
+        description: 'Error in Creating Tokens.',
+      });
     }
   };
 
