@@ -10,43 +10,58 @@ contract Main {
         string tokenName;
         string tokenSymbol;
         uint256 number;
+        uint256 amount; 
     }
 
-    mapping(address => TokenHolder) private accounts;
+    string[] private tokenSymbolArray;
+    mapping(string => TokenHolder) private accounts;
+    mapping(string => Token) private tokens; 
     mapping(address => bool) private hasDeployed;
 
-    Token public token;
-
-    constructor() {
-        require(!hasDeployed[msg.sender], "You can only deploy the contract once.");
-
-        string memory name = "MyToken";
-        string memory symbol = "MTK";
-        token = new Token(name, symbol);
-
-        hasDeployed[msg.sender] = true;
-
-        accounts[msg.sender] = TokenHolder({
-            holderAddress: msg.sender,
-            tokenName: name,
-            tokenSymbol: symbol,
-            number: 0
-        });
-    }
-
-    function mintTokens(uint256 number) public {
-        require(msg.sender == accounts[msg.sender].holderAddress, "Only the token holder can mint tokens.");
-        token.mintTokens(number);
-        accounts[msg.sender].number = number;
-    }
-
-    function getTokenHolderDetails(address account) public view returns (
-        address holderAddress,
+    function mintTokens(
         string memory tokenName,
         string memory tokenSymbol,
         uint256 number
-    ) {
-        TokenHolder storage holder = accounts[account];
-        return (holder.holderAddress, holder.tokenName, holder.tokenSymbol, holder.number);
+    ) public {
+
+        TokenHolder storage holder = accounts[tokenSymbol];
+        if (holder.holderAddress != address(0)) {
+            require(msg.sender == holder.holderAddress, "Only the token holder can mint tokens.");
+        } else {
+            accounts[tokenSymbol] = TokenHolder({
+                holderAddress: msg.sender,
+                tokenName: tokenName,
+                tokenSymbol: tokenSymbol,
+                number: number,
+                amount: 0
+            });
+            tokenSymbolArray.push(tokenSymbol);
+
+            tokens[tokenSymbol] = new Token(tokenName, tokenSymbol);
+        }
+
+        // Mint the specified number of tokens using the Token contract
+        Token token = tokens[tokenSymbol];
+        token.mintTokens(number);
+
+        // Update the holder's number of tokens
+        holder.number = number;
     }
+
+    function getTokenHolderDetails(string memory symbol) public view returns (
+        address holderAddress,
+        string memory tokenName,
+        string memory tokenSymbol,
+        uint256 number,
+        uint256 amount
+    ) {
+        TokenHolder storage holder = accounts[symbol];
+        return (holder.holderAddress, holder.tokenName, holder.tokenSymbol, holder.number, holder.amount);
+    }
+
+    function showToken() public view returns (string[] memory) {
+        return tokenSymbolArray;
+    }
+
+
 }
