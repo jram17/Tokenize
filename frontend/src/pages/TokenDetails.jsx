@@ -3,37 +3,11 @@ import MyToken from '@/app_components/MyToken';
 import { ethers } from 'ethers';
 import details from '../contracts';
 
-const personaltokendetails = {
-  tokenname: 'Inthrakumar',
-  tokensymbol: 'IK',
-  ethvalue: '0.01',
-  transactionhash: '0xSsjdfvbskdjvbsdvjsdvc',
-  Address: '0xekfjhsdkfjsdfjksd',
-  tokensremaning: '10',
-};
-
-const othertokendetails = [
-  {
-    tokenname: 'SampleToken1',
-    tokensymbol: 'STK1',
-    ethvalue: '0.02',
-    transactionhash: '0xAnotherHash1',
-    Address: '0xSomeOtherAddress1',
-    tokensremaning: '20',
-  },
-  {
-    tokenname: 'SampleToken2',
-    tokensymbol: 'STK2',
-    ethvalue: '0.03',
-    transactionhash: '0xAnotherHash2',
-    Address: '0xSomeOtherAddress2',
-    tokensremaning: '30',
-  },
-];
-
 function TokenDetails() {
   const [provider, setProvider] = useState(null);
   const [signer, setSigner] = useState(null);
+  const [personaltokendetails, setPersonalTokenDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const initializeEthers = async () => {
@@ -49,22 +23,40 @@ function TokenDetails() {
             signer
           );
           const tx = await contract.getTokenHolderDetailsWithAddress();
-          console.log(tx);
+          setPersonalTokenDetails({
+            tokenname: tx.tokenName,
+            tokensymbol: tx.tokenSymbol,
+            Address: tx.holderAddress,
+            tokensremaining: Number(tx.number).toString(),
+            ethvalue: Number(tx.amount).toString(),
+          });
+
+          setLoading(false);
         } else {
           console.error('No Ethereum provider found');
+          setLoading(false);
         }
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     };
 
     initializeEthers();
   }, []);
 
-  const allTokenDetails = [personaltokendetails, ...othertokendetails];
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center  bg-[#f0f0f0]">
+        <p className="text-4xl font-faustina">Loading...</p>
+      </div>
+    );
+  }
+
+  const allTokenDetails = [personaltokendetails];
 
   return (
-    <div className="min-h-screen flex items-left justify-center bg-cover bg-repeat-y">
+    <div className="min-h-screen flex items-left justify-center bg-cover bg-repeat-y  bg-[#f0f0f0]">
       <MyToken tokendetails={allTokenDetails} />
     </div>
   );
