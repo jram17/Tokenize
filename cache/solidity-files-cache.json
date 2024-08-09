@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "D:\\web3ssh\\Tokenize\\contracts\\main.sol": {
-      "lastModificationDate": 1723124135405,
-      "contentHash": "c549bd269e5932bc3f50d005493d9340",
+      "lastModificationDate": 1723185248211,
+      "contentHash": "ca430a4d1fb401a58be7a81debcb63d3",
       "sourceName": "contracts/main.sol",
       "solcConfig": {
         "version": "0.8.24",
@@ -40,8 +40,8 @@
       ]
     },
     "D:\\web3ssh\\Tokenize\\contracts\\token.sol": {
-      "lastModificationDate": 1723118778090,
-      "contentHash": "05d4c1368fd3544222c324a364a6b353",
+      "lastModificationDate": 1723185238286,
+      "contentHash": "392743c30b559dd57b59e43bc5f4ad95",
       "sourceName": "contracts/token.sol",
       "solcConfig": {
         "version": "0.8.24",
@@ -68,8 +68,7 @@
         }
       },
       "imports": [
-        "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        "@openzeppelin/contracts/access/Ownable.sol"
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
       ],
       "versionPragmas": [
         "^0.8.20"
