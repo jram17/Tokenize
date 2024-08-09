@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "E:\\web3ssh\\contracts\\main.sol": {
-      "lastModificationDate": 1723215746702,
-      "contentHash": "a971d9fd5dab40cd70f4489a9ce26c2c",
+      "lastModificationDate": 1723217249837,
+      "contentHash": "c7cf5ee64c34321092a109c4385c51f0",
       "sourceName": "contracts/main.sol",
       "solcConfig": {
         "version": "0.8.24",

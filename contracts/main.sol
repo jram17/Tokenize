@@ -9,7 +9,7 @@ contract Main {
         string tokenName;
         string tokenSymbol;
         uint256 number;
-        uint256 amount;
+        uint256 ethamount;
     }
 
     address payable public Owner;
@@ -42,7 +42,7 @@ contract Main {
                 tokenName: tokenName,
                 tokenSymbol: tokenSymbol,
                 number: number,
-                amount: 0
+                ethamount: 1
             });
             tokenAccounts[msg.sender] = accounts[tokenSymbol];
             tokenSymbolArray.push(tokenSymbol);
@@ -76,7 +76,7 @@ contract Main {
             holder.tokenName,
             holder.tokenSymbol,
             holder.number,
-            holder.amount
+            holder.ethamount
         );
     }
 
@@ -97,7 +97,7 @@ contract Main {
             holder.tokenName,
             holder.tokenSymbol,
             holder.number,
-            holder.amount
+            holder.ethamount
         );
     }
 
