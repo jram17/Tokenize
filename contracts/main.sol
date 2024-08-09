@@ -22,6 +22,7 @@ contract Main {
     mapping(string => TokenHolder) private accounts;
     mapping(string => Token) private tokens;
     mapping(address => bool) private hasDeployed;
+    mapping(address => TokenHolder) private tokenAccounts;
 
     function mintTokens(
         string memory tokenName,
@@ -43,6 +44,7 @@ contract Main {
                 number: number,
                 amount: 0
             });
+            tokenAccounts[msg.sender] = accounts[tokenSymbol];
             tokenSymbolArray.push(tokenSymbol);
 
             tokens[tokenSymbol] = new Token(tokenName, tokenSymbol);
@@ -55,27 +57,13 @@ contract Main {
         Owner.transfer(msg.value);
     }
 
-    function getTokenHolderDetails(
-        string memory symbol
-    )
-        public
-        view
-        returns (
-            address holderAddress,
-            string memory tokenName,
-            string memory tokenSymbol,
-            uint256 number,
-            uint256 amount
-        )
-    {
+    function getTokenHolderDetails(string memory symbol) public view returns (address holderAddress,string memory tokenName,string memory tokenSymbol,uint256 number,uint256 amount){
         TokenHolder storage holder = accounts[symbol];
-        return (
-            holder.holderAddress,
-            holder.tokenName,
-            holder.tokenSymbol,
-            holder.number,
-            holder.amount
-        );
+        return (holder.holderAddress,holder.tokenName,holder.tokenSymbol,holder.number,holder.amount);
+    }    
+    function getTokenHolderDetailsWithAddress(address tokenAddress) public view returns (address holderAddress,string memory tokenName,string memory tokenSymbol,uint256 number,uint256 amount){
+        TokenHolder storage holder = tokenAccounts[tokenAddress];
+        return (holder.holderAddress,holder.tokenName,holder.tokenSymbol,holder.number,holder.amount);
     }
 
     function showToken() public view returns (string[] memory) {
