@@ -41,7 +41,7 @@ function TokenForm() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      useraddress: address || '', // Use address from store or default to empty string
+      useraddress: address || '',
       tokenname: '',
       tokensymbol: '',
       nofotokens: '',

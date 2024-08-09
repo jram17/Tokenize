@@ -12,7 +12,8 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-
+import { AddressStore } from '@/store/store';
+import { useEffect, useState } from 'react';
 // Define the form schema
 const formSchema = z.object({
   useraddress: z.string().min(2, {
@@ -30,17 +31,24 @@ const formSchema = z.object({
 });
 
 function SellTokens() {
+  const { address } = AddressStore((state) => ({ address: state.address }));
+
   // Create the form using useForm
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      useraddress: '',
+      useraddress: address | '',
       tokenname: '',
       tokensymbol: '',
       nofotokens: '',
     },
   });
-
+  const { reset } = form;
+  useEffect(() => {
+    reset({
+      useraddress: address || '',
+    });
+  }, [address, reset]);
   const onSubmit = (values) => {
     console.log('Submitting form with values:', values);
   };
@@ -62,6 +70,7 @@ function SellTokens() {
                   <Input
                     placeholder="0x4e....2ew"
                     className="min-w-[90%]"
+                    disabled={true}
                     {...field}
                   />
                 </FormControl>

@@ -4,7 +4,9 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import details from '../contracts';
 import { ethers } from 'ethers';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { AddressStore } from '@/store/store';
+
 import {
   Form,
   FormControl,
@@ -35,6 +37,8 @@ const formSchema = z.object({
 function BuyTokens() {
   const [provider, setProvider] = useState(null);
   const [signer, setSigner] = useState(null);
+  const { address } = AddressStore((state) => ({ address: state.address }));
+
   useEffect(() => {
     const initializeEthers = async () => {
       if (window.ethereum) {
@@ -52,13 +56,18 @@ function BuyTokens() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      useraddress: '',
+      useraddress: address || '',
       tokenname: '',
       tokensymbol: '',
       nofotokens: '',
     },
   });
-
+  const { reset } = form;
+  useEffect(() => {
+    reset({
+      useraddress: address || '',
+    });
+  }, [address, reset]);
   const onSubmit = (values) => {
     console.log('Submitting form with values:', values);
     console.log('fetching');
@@ -85,6 +94,7 @@ function BuyTokens() {
                     placeholder="0x4e....2ew"
                     className="min-w-[90%]"
                     {...field}
+                    disabled={true}
                   />
                 </FormControl>
                 <FormDescription>
