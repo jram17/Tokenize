@@ -58,6 +58,7 @@ function App() {
         if (newAddress === undefined) {
           return _resetState();
         }
+        console.log('changed address', newAddress);
         _initialize(newAddress);
       });
     }
