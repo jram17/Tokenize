@@ -25,13 +25,7 @@ function TokenDetails() {
 
           const tx = await contract.getTokenHolderDetailsWithAddress();
           console.log(tx);
-          setPersonalTokenDetails({
-            tokenname: tx.tokenName,
-            tokensymbol: tx.tokenSymbol,
-            Address: tx.holderAddress,
-            tokensremaining: Number(tx.number).toString(),
-            ethvalue: Number(tx.amount).toString(),
-          });
+
           setLoading(false);
         } else {
           console.error('No Ethereum provider found');
@@ -63,7 +57,7 @@ function TokenDetails() {
 
   return (
     <div className="min-h-screen flex items-left justify-center bg-cover bg-repeat-y  bg-[#f0f0f0]">
-      <MyToken tokendetails={allTokenDetails} />
+      {/* <MyToken tokendetails={allTokenDetails} /> */}
     </div>
   );
 }

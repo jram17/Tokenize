@@ -79,10 +79,12 @@ contract Main {
         );
     }
 
-    function getTokenHolderDetailsWithAddress(
-        address tokenAddress
-    ) public view returns (TokenHolder[] memory) {
-        return tokenAccounts[tokenAddress];
+    function getTokenHolderDetailsWithAddress()
+        public
+        view
+        returns (TokenHolder[] memory)
+    {
+        return tokenAccounts[msg.sender];
     }
 
     function showToken() public view returns (string[] memory) {
