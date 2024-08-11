@@ -15,26 +15,28 @@ function MyToken({ tokendetails }) {
       </div>
       {tokendetails.length === 0 && (
         <div className="grid grid-cols-2 gap-5 m-2 w-full">
-          No Tokens Till Now
+          No Tokens Minted Or Bought Till Now In This Account Till Now
         </div>
       )}
 
-      <div className="grid grid-cols-2 gap-5 m-2 w-full">
+      <div className="grid grid-cols-2 gap-5 p-5 w-full">
         {tokendetails.map((token, index) => (
           <Card
             key={index}
             className="flex flex-col gap-2 shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
-            <CardHeader className="font-faustina">{token.tokenname}</CardHeader>
+            <CardHeader className="font-faustina">{token.tokenName}</CardHeader>
             <CardContent className="flex flex-col gap-3">
               <CardDescription>
-                Token Symbol: {token.tokensymbol}
+                Token Symbol: {token.tokenSymbol}
               </CardDescription>
-              <CardDescription>ETH Value: {token.ethvalue}</CardDescription>
-
-              <CardDescription>Address: {token.Address}</CardDescription>
               <CardDescription>
-                Tokens Remaining: {token.tokensremaining}
+                ETH Value: {Number(token.ethamount)}
+              </CardDescription>
+
+              <CardDescription>Address: {token.holderAddress}</CardDescription>
+              <CardDescription>
+                Tokens Remaining: {Number(token.number)}
               </CardDescription>
             </CardContent>
             <CardFooter>{/* Add your own actions here */}</CardFooter>

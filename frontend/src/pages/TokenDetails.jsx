@@ -6,7 +6,7 @@ import details from '../contracts';
 function TokenDetails() {
   const [provider, setProvider] = useState(null);
   const [signer, setSigner] = useState(null);
-  const [personaltokendetails, setPersonalTokenDetails] = useState(null);
+  const [personalTokenDetails, setPersonalTokenDetails] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,8 +24,8 @@ function TokenDetails() {
           );
 
           const tx = await contract.getTokenHolderDetailsWithAddress();
-          console.log(tx);
 
+          setPersonalTokenDetails(tx);
           setLoading(false);
         } else {
           console.error('No Ethereum provider found');
@@ -47,17 +47,15 @@ function TokenDetails() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center  bg-[#f0f0f0]">
+      <div className="min-h-screen flex items-center justify-center bg-[#f0f0f0]">
         <p className="text-4xl font-faustina">Loading...</p>
       </div>
     );
   }
 
-  const allTokenDetails = [personaltokendetails];
-
   return (
-    <div className="min-h-screen flex items-left justify-center bg-cover bg-repeat-y  bg-[#f0f0f0]">
-      {/* <MyToken tokendetails={allTokenDetails} /> */}
+    <div className="min-h-screen flex items-left justify-center bg-cover bg-repeat-y bg-[#f0f0f0]">
+      <MyToken tokendetails={personalTokenDetails} />
     </div>
   );
 }
