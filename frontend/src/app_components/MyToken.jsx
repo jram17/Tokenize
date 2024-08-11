@@ -9,25 +9,26 @@ import {
 
 function MyToken({ tokendetails }) {
   return (
-    <div className="flex flex-col justify-around gap-4  w-full bg-[#f0f0f0]">
+    <div className="flex flex-col  gap-20  w-full">
       <div className="w-full flex items-center justify-around">
-        <p className="text-5xl font-faustina">My Tokens</p>
+        <p className="text-5xl font-faustina mt-6">My Tokens</p>
       </div>
       <div className="grid grid-cols-2 gap-5 m-2 w-full">
         {tokendetails.map((token, index) => (
           <Card
-            key={token.tokensymbol}
+            key={index}
             className="flex flex-col gap-2 shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
             <CardHeader className="font-faustina">{token.tokenname}</CardHeader>
             <CardContent className="flex flex-col gap-3">
-              <CardDescription>ETH Value: {token.ethvalue}</CardDescription>
               <CardDescription>
-                Transaction Hash: {token.transactionhash}
+                Token Symbol: {token.tokensymbol}
               </CardDescription>
+              <CardDescription>ETH Value: {token.ethvalue}</CardDescription>
+
               <CardDescription>Address: {token.Address}</CardDescription>
               <CardDescription>
-                Tokens Remaining: {token.tokensremaning}
+                Tokens Remaining: {token.tokensremaining}
               </CardDescription>
             </CardContent>
             <CardFooter>{/* Add your own actions here */}</CardFooter>

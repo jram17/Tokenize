@@ -98,7 +98,6 @@ function TokenForm() {
           value: totalCost,
         }
       );
-      console.log('came here');
       await tx.wait();
       toast({
         description: 'Token Created Successfully.',

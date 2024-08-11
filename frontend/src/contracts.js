@@ -1,5 +1,5 @@
 const details = {
-    "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
     "abi": [
         {
             "inputs": [],
@@ -28,6 +28,39 @@ const details = {
                 }
             ],
             "name": "getTokenHolderDetails",
+            "outputs": [
+                {
+                    "internalType": "address",
+                    "name": "holderAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "string",
+                    "name": "tokenName",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "tokenSymbol",
+                    "type": "string"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "number",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "amount",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "getTokenHolderDetailsWithAddress",
             "outputs": [
                 {
                     "internalType": "address",

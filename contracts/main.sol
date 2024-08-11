@@ -9,7 +9,7 @@ contract Main {
         string tokenName;
         string tokenSymbol;
         uint256 number;
-        uint256 amount;
+        uint256 ethamount;
     }
 
     address payable public Owner;
@@ -42,7 +42,7 @@ contract Main {
                 tokenName: tokenName,
                 tokenSymbol: tokenSymbol,
                 number: number,
-                amount: 0
+                ethamount: 1
             });
             tokenAccounts[msg.sender].push(accounts[tokenSymbol]);
             tokenSymbolArray.push(tokenSymbol);
@@ -57,7 +57,19 @@ contract Main {
         Owner.transfer(msg.value);
     }
 
-    function getTokenHolderDetails(string memory symbol) public view returns (address holderAddress,string memory tokenName,string memory tokenSymbol,uint256 number,uint256 amount){
+    function getTokenHolderDetails(
+        string memory symbol
+    )
+        public
+        view
+        returns (
+            address holderAddress,
+            string memory tokenName,
+            string memory tokenSymbol,
+            uint256 number,
+            uint256 amount
+        )
+    {
         TokenHolder storage holder = accounts[symbol];
         return (holder.holderAddress,holder.tokenName,holder.tokenSymbol,holder.number,holder.amount);
     }    
