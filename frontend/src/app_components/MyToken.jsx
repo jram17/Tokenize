@@ -13,6 +13,12 @@ function MyToken({ tokendetails }) {
       <div className="w-full flex items-center justify-around">
         <p className="text-5xl font-faustina mt-6">My Tokens</p>
       </div>
+      {tokendetails.length === 0 && (
+        <div className="grid grid-cols-2 gap-5 m-2 w-full">
+          No Tokens Till Now
+        </div>
+      )}
+
       <div className="grid grid-cols-2 gap-5 m-2 w-full">
         {tokendetails.map((token, index) => (
           <Card

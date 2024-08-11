@@ -22,7 +22,9 @@ function TokenDetails() {
             details.abi,
             signer
           );
+
           const tx = await contract.getTokenHolderDetailsWithAddress();
+          console.log(tx);
           setPersonalTokenDetails({
             tokenname: tx.tokenName,
             tokensymbol: tx.tokenSymbol,
@@ -30,14 +32,18 @@ function TokenDetails() {
             tokensremaining: Number(tx.number).toString(),
             ethvalue: Number(tx.amount).toString(),
           });
-
           setLoading(false);
         } else {
           console.error('No Ethereum provider found');
           setLoading(false);
         }
       } catch (error) {
-        console.log(error);
+        console.error('Error fetching token details:', error);
+        if (error.code === ethers.errors.CALL_EXCEPTION) {
+          console.error(
+            'Call exception. Possible reasons: incorrect method name, contract not deployed, or insufficient gas.'
+          );
+        }
         setLoading(false);
       }
     };

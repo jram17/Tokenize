@@ -29,7 +29,6 @@ contract Main {
         string memory tokenSymbol,
         uint256 number
     ) public payable {
-        // Add the payable keyword here
         TokenHolder storage holder = accounts[tokenSymbol];
         if (holder.holderAddress != address(0)) {
             require(
