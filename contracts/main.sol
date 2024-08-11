@@ -66,13 +66,22 @@ contract Main {
             string memory tokenName,
             string memory tokenSymbol,
             uint256 number,
-            uint256 amount
+            uint256 ethamount
         )
     {
         TokenHolder storage holder = accounts[symbol];
-        return (holder.holderAddress,holder.tokenName,holder.tokenSymbol,holder.number,holder.amount);
-    }    
-    function getTokenHolderDetailsWithAddress(address tokenAddress) public view returns (TokenHolder[] memory){
+        return (
+            holder.holderAddress,
+            holder.tokenName,
+            holder.tokenSymbol,
+            holder.number,
+            holder.ethamount
+        );
+    }
+
+    function getTokenHolderDetailsWithAddress(
+        address tokenAddress
+    ) public view returns (TokenHolder[] memory) {
         return tokenAccounts[tokenAddress];
     }
 

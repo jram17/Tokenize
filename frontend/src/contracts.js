@@ -51,7 +51,7 @@ const details = {
                 },
                 {
                     "internalType": "uint256",
-                    "name": "amount",
+                    "name": "ethamount",
                     "type": "uint256"
                 }
             ],
@@ -59,33 +59,46 @@ const details = {
             "type": "function"
         },
         {
-            "inputs": [],
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "tokenAddress",
+                    "type": "address"
+                }
+            ],
             "name": "getTokenHolderDetailsWithAddress",
             "outputs": [
                 {
-                    "internalType": "address",
-                    "name": "holderAddress",
-                    "type": "address"
-                },
-                {
-                    "internalType": "string",
-                    "name": "tokenName",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "tokenSymbol",
-                    "type": "string"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "number",
-                    "type": "uint256"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "amount",
-                    "type": "uint256"
+                    "components": [
+                        {
+                            "internalType": "address",
+                            "name": "holderAddress",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "tokenName",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "tokenSymbol",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "number",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "ethamount",
+                            "type": "uint256"
+                        }
+                    ],
+                    "internalType": "struct Main.TokenHolder[]",
+                    "name": "",
+                    "type": "tuple[]"
                 }
             ],
             "stateMutability": "view",
