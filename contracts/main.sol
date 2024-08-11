@@ -22,7 +22,7 @@ contract Main {
     mapping(string => TokenHolder) private accounts;
     mapping(string => Token) private tokens;
     mapping(address => bool) private hasDeployed;
-    mapping(address => TokenHolder) private tokenAccounts;
+    mapping(address => TokenHolder[]) private tokenAccounts;
 
     function mintTokens(
         string memory tokenName,
@@ -43,7 +43,7 @@ contract Main {
                 number: number,
                 ethamount: 1
             });
-            tokenAccounts[msg.sender] = accounts[tokenSymbol];
+            tokenAccounts[msg.sender].push(accounts[tokenSymbol]);
             tokenSymbolArray.push(tokenSymbol);
 
             tokens[tokenSymbol] = new Token(tokenName, tokenSymbol);
@@ -70,34 +70,10 @@ contract Main {
         )
     {
         TokenHolder storage holder = accounts[symbol];
-        return (
-            holder.holderAddress,
-            holder.tokenName,
-            holder.tokenSymbol,
-            holder.number,
-            holder.ethamount
-        );
-    }
-
-    function getTokenHolderDetailsWithAddress()
-        public
-        view
-        returns (
-            address holderAddress,
-            string memory tokenName,
-            string memory tokenSymbol,
-            uint256 number,
-            uint256 amount
-        )
-    {
-        TokenHolder storage holder = tokenAccounts[msg.sender];
-        return (
-            holder.holderAddress,
-            holder.tokenName,
-            holder.tokenSymbol,
-            holder.number,
-            holder.ethamount
-        );
+        return (holder.holderAddress,holder.tokenName,holder.tokenSymbol,holder.number,holder.amount);
+    }    
+    function getTokenHolderDetailsWithAddress(address tokenAddress) public view returns (TokenHolder[] memory){
+        return tokenAccounts[tokenAddress];
     }
 
     function showToken() public view returns (string[] memory) {
